@@ -5,15 +5,15 @@
 (def brac1 "([{}])")
 
 (defn valid?
-  ([x] (valid? [x 0]))
-  ([x i] ;; <- arglist goes here
-   (let [j 0]
-     (cond 
-       (= (nth x i) \() (do (inc j) (valid? x (inc i)))
-       (= (nth x i) \)) (do (dec j) (valid? x (inc i)))
-       (= i (count (- x 1))) j
-       ))
-   ))
+  ([x] (valid? x 0 0))
+  ([x i j]
+   (cond
+     (< j 0) false
+     (and  (= i (count x)) (= 0 j)) true
+     (and (= i (count x)) (not= 0 j)) false
+     (= (nth x i) \() (valid? x (inc i) (inc j))
+     (= (nth x i) \)) (valid? x (inc i) (dec j))
+     ) ))
 
 
 
