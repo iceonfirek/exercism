@@ -31,7 +31,7 @@
 
 (deftest unopened-closing-brackets
   (is (false? (matching-brackets/valid? "{[)][]}"))
-      "unopened closing brackets"))
+      "unopened closing brackets"c))
  
 (deftest unpaired-and-nested-brackets
   (is (false? (matching-brackets/valid? "([{])"))
