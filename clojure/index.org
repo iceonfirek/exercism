@@ -1,0 +1,46 @@
+#+begin_src clojure
+  (defn f [x] (* x x))
+
+  (f 25)
+#+end_src
+
+#+RESULTS:
+| #'user/f |
+|      625 |
+
+#+begin_src clojure 
+  (defn f [x] (* x x))
+
+  (f 5)
+#+end_src
+
+#+RESULTS:
+| #'user/f |
+|       25 |
+
+
+#+name: pd2org
+#+begin_src python :var df="df" :exports none
+  return f"return tabulate({df}, headers={df}.columns, tablefmt='orgtbl')"
+#+end_src
+
+#+RESULTS: pd2org
+: return tabulate(df, headers=df.columns, tablefmt='orgtbl')
+
+#+header: :prologue from tabulate import tabulate
+#+header: :noweb strip-export
+#+begin_src python 
+  import pandas as pd
+  df = pd.DataFrame({
+      "a": [1,10,3],
+      "b": [4,5,6]
+  })
+  <<pd2org("df")>>
+#+end_src
+
+#+RESULTS:
+: |    |   a |   b |
+: |----+-----+-----|
+: |  0 |   1 |   4 |
+: |  1 |  10 |   5 |
+: |  2 |   3 |   6 |
