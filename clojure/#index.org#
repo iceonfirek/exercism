@@ -1,0 +1,76 @@
+#+begin_src clojure
+  (defn f [x] (* x x))
+
+  (f 25)
+#+end_src
+
+#+RESULTS:
+| #'user/f |
+|      625 |
+
+#+begin_src clojure 
+  (defn f [x] (* x x))
+
+  (f 5)
+#+end_src
+
+#+RESULTS:
+| #'user/f |
+|       25 |
+
+
+#+name: pd2org
+#+begin_src python :var df="df" :exports none
+  return f"return tabulate({df}, headers={df}.columns, tablefmt='orgtbl')"
+#+end_src
+
+#+RESULTS: pd2org
+: return tabulate(df, headers=df.columns, tablefmt='orgtbl')
+
+#+header: :prologue from tabulate import tabulate
+#+header: :noweb strip-export
+#+begin_src python 
+  import pandas as pd
+  df = pd.DataFrame({
+      "a": [1,10,3],
+      "b": [4,5,6]
+  })
+  <<pd2org("df")>>
+#+end_src
+
+#+RESULTS:
+: |    |   a |   b |
+: |----+-----+-----|
+: |  0 |   1 |   4 |
+: |  1 |  10 |   5 |
+: |  2 |   3 |   6 |
+
+#+begin_src 
+  
+
+
+ (define (disp sexp)
+     (display sexp)
+     (newline))
+   (disp 10)
+   (disp (+ 2 3 4))
+   (disp (- 9 1))
+   (disp (/ 6 2))
+   (disp (+ (* 2 4) (- 4 6)))
+   (define a 3)
+   (define b (+ a 1))
+   (disp (+ a b (* a b)))
+   (disp (= a b))
+   (disp
+    (if (and (> b a) (< b (* a b )))
+	b
+	a))
+   (disp (cond ((= a 4) 6)
+	((= b 4) (+ 6 7 a))
+	(else 25)))
+   (disp (+ 2 (if (< b a) b a)))
+   (disp (* (cond ((> a b) a)
+               ((< a b) b)
+               (else -1))
+            (+ a 1)))  
+#+end_src

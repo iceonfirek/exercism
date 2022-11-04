@@ -1,7 +1,11 @@
 (ns all-your-base)
 
+;;polynomial function by Francesco Strino
+
 (defn- to-base-10 [n-list from-base]
   (reduce #(+ (* from-base %1) %2) 0 n-list))
+
+;;-> (+ (* from-base (+ (* from-base a) b)) c)
 
 (defn- from-base-10 [n to-base]
   (loop [n n res ()]
