@@ -1,8 +1,14 @@
 (ns prime-factors)
 
 (defn of [x]
-  (reduce #(if (zero? %1 %2) ) [x] (range 2 x))
-  )
+  (loop [m x
+         n 2
+         l []]
+    (cond
+      (= m 1) l
+   ;;   (= 0 (- m n)) (concat l [n])
+      (zero? (mod m n)) (recur (quot m n) n (concat l [n]))
+      :else (recur m (inc n) l))))
 
 ;; recur approach (sof bignums)
 
