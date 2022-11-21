@@ -1,4 +1,4 @@
-(ns crypto-square (:require [clojure.string :refer [lower-case replace]]))
+(ns crypto-square (:require [clojure.string :refer [lower-case replace join]]))
 
 (defn normalize-plaintext [x]
   (replace (lower-case x) #"[^a-z0-9]" ""))
@@ -13,21 +13,20 @@
           (recur (inc c)))))))
 
 (defn plaintext-segments [x]
-  (let [s (normalize-plaintext x)]
-    (let [c (inc (quot (count s) (square-size s)))]
-      (->> (partition-all c c s)
-           (map #(apply str %))))))
-
-(defn ciphertext [x]
   (let [s (normalize-plaintext x)
         c (inc (quot (count s) (square-size s)))]
-    (->> (str s (apply str (repeat (- c (mod (count s) c)) ".")))
+    (->> (partition-all c s)
+         (map #(apply str %)))))
+
+(defn normalize-ciphertext [x]
+  (let [s (normalize-plaintext x)
+        c (inc (quot (count s) (square-size s)))
+        z (mod (count s) c)]
+    (->> (str s (apply str (repeat (- c (if (= 0 z) c z)) " ")))
          (partition-all c c)
          (apply map str)
-         (map #(replace % #"\." ""))
-         )
-    
-    )
-  )
+         (join " "))))
 
-(defn normalize-ciphertext [])
+(defn ciphertext [x]
+  (-> (normalize-ciphertext x)
+      (replace #" " "")))
