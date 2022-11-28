@@ -15,6 +15,24 @@
                 (pairs? (last m) (first x)) (recur (rest x) (pop m))
                 :else (recur (rest x) (conj m (first x))))))))
 
+;; goderich's solution on exercism
+
+;; TIL that a `reduce` can be short-circuited
+;; using `reduced`. Very useful.
+;; Non-matching brackets return a bogus
+;; non-empty list, so that both this outcome
+;; as well as unmatched dangling brackets
+;; can be checked against using `empty?`.
+(defn- matcher [[fst & rst :as acc] c]
+  (case c
+    (\{ \[ \() (cons c acc)
+    \} (if (= \{ fst) rst (reduced [false]))
+    \] (if (= \[ fst) rst (reduced [false]))
+    \) (if (= \( fst) rst (reduced [false]))
+    acc))
+(defn valid?_ [s]
+  (empty? (reduce matcher [] s)))
+
 ;; (defn valid?
 ;;   ([x] (valid? x 0 0))
 ;;   ([s i j]

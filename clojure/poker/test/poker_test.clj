@@ -25,6 +25,7 @@
   (is (f ["3S 5H 6S 8D 7H"
           "2S 5D 6D 8C 7S"]
          ["3S 5H 6S 8D 7H"])))
+;;Mon Nov 28 11:57:38 CST 2022
 
 (deftest one-pair-beats-high-card
   (is (f ["4S 5H 6C 8D KH"
@@ -35,6 +36,7 @@
   (is (f ["4S 2H 6S 2D JH"
           "2S 4H 6C 4D JD"]
          ["2S 4H 6C 4D JD"])))
+;;Mon Nov 28 11:26:57 CST 2022
 
 (deftest two-pairs-beats-one-pair
   (is (f ["2S 8H 6S 8D JH"
@@ -55,6 +57,7 @@
   (is (f ["JD QH JS 8D QC"
           "JS QS JC 2D QD"]
          ["JD QH JS 8D QC"])))
+;;Mon Nov 28 10:10:39 CST 2022
 
 (deftest three-of-a-kind-beats-two-pair
   (is (f ["2S 8H 2H 8D JH"
@@ -70,6 +73,7 @@
   (is (f ["4S AH AS 7C AD"
           "4S AH AS 8C AD"]
          ["4S AH AS 8C AD"])))
+;;Fri Nov 25 17:08:38 CST 2022
 
 (deftest a-straight-beats-three-of-a-kind
   (is (f ["4S 5H 4C 8D 4H"
@@ -95,6 +99,7 @@
   (is (f ["2H 3C 4D 5D 6H"
           "4S AH 3S 2D 5H"]
          ["2H 3C 4D 5D 6H"])))
+;;Fri Nov 25 16:46:21 CST 2022
 
 (deftest flush-beats-a-straight
   (is (f ["4C 6H 7D 8D 5H"
@@ -110,6 +115,7 @@
   (is (f ["3H 6H 7H 8H 5H"
           "4S 5H 4C 5D 4H"]
          ["4S 5H 4C 5D 4H"])))
+;;Fri Nov 25 15:48:22 CST 2022
 
 (deftest both-hands-have-a-full-house-tie-goes-to-highest-ranked-triplet
   (is (f ["4H 4S 4D 9S 9D"
