@@ -2,18 +2,19 @@
 // to enable stricter warnings.
 #![allow(unused)]
 
+const PRODUCT_EACH_HOUR: f64 = 221.0;
+
 pub fn production_rate_per_hour(speed: u8) -> f64 {
-    if speed < 5 {
-        (speed as f64) * 221.0
-    } else if speed < 9 {
-        (speed as f64) * 0.9 * 211.0
-    } else {
-        (speed as f64) * 0.77 * 211.0
-    }
+    let rate = match speed {
+        1..=4 => 1.0,
+        5..=8 => 0.9,
+        9..=10 => 0.77,
+        _ => 0.00,
+    };
+
+    PRODUCT_EACH_HOUR * rate * speed as f64
 }
 
 pub fn working_items_per_minute(speed: u8) -> u32 {
     (production_rate_per_hour(speed) / 60.0) as u32
 }
-
-assembly_line::working_items_per_minute(6)
