@@ -1,44 +1,35 @@
-#[derive(Debug, PartialEq, Eq)]
+use enum_iterator::*;
+use int_enum::IntEnum;
+
+#[repr(u32)]
+#[derive(Debug, PartialEq, Eq, IntEnum, Clone, Copy, Sequence, PartialOrd, Ord)]
+
 pub enum ResistorColor {
-    Black,
-    Blue,
-    Brown,
-    Green,
-    Grey,
-    Orange,
-    Red,
-    Violet,
-    White,
-    Yellow,
+    Black = 0,
+    Blue = 6,
+    Brown = 1,
+    Green = 5,
+    Grey = 8,
+    Orange = 3,
+    Red = 2,
+    Violet = 7,
+    White = 9,
+    Yellow = 4,
 }
 
 pub fn color_to_value(_color: ResistorColor) -> u32 {
-    match _color {
-        ResistorColor::Black => 0,
-        ResistorColor::Brown => 1,
-        ResistorColor::Red => 2,
-        ResistorColor::Orange => 3,
-        ResistorColor::Yellow => 4,
-        ResistorColor::Green => 5,
-        ResistorColor::Blue => 6,
-        ResistorColor::Violet => 7,
-        ResistorColor::Grey => 8,
-        ResistorColor::White => 9,
+    _color as u32
+}
+
+pub fn value_to_color_string(_value: u32) -> String {
+    match ResistorColor::from_int(_value) {
+        Ok(value) => format!("{:?}", value),
+        Err(_) => "value out of range".to_string(),
     }
 }
 
-pub fn value_to_color_string(value: u32) -> String {
-    unimplemented!(
-        "convert the value {} into a string representation of color",
-        value
-    )
-}
-
 pub fn colors() -> Vec<ResistorColor> {
-    unimplemented!("return a list of all the colors ordered by resistance")
+    let mut c :Vec<ResistorColor>= all::<ResistorColor>().collect();
+    c.sort();
+    c
 }
-
-fn main() {
-    println!("{}", color_to_value (ResistorColor::White));
-}
-

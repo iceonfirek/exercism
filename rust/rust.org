@@ -1,0 +1,136 @@
+*** 显式溢出
+- [2022-12-08 Thu 12:05] \\
+  要显式处理可能的溢出，可以使用标准库针对原始数字类型提供的这些方法：
+  使用 wrapping_* 方法在所有模式下都按照补码循环溢出规则处理，例如 wrapping_add
+  如果使用 checked_* 方法时发生溢出，则返回 None 值
+  使用 overflowing_* 方法返回该值和一个指示是否存在溢出的布尔值
+  使用 saturating_* 方法使值达到最小值或最大值
+*** 浮点数精度
+- [2022-12-08 Thu 13:24] \\
+  用f32 单精度 执行浮点数等式运算成功率较高
+  建议使用(0.1_f64+0.2-0.3).abs()<0.000001XF
+*** char method
+- [2022-12-08 Thu 14:23] \\
+  字符占用4字节
+  bool占用1字节
+  size_of_val()
+- [2022-12-08 Thu 14:09] \\
+  to_digit(10) 用作数字转换
+  字母转换使用 as u16
+*** 定义无类型函数
+- [2022-12-08 Thu 15:06] \\
+  #+begin_src rust 
+    fn print<T: std::fmt::Debug>(t: T) {
+        println!("{:?}", t)
+    }
+  #+end_src
+*** 永不反悔函数!
+- [2022-12-08 Thu 15:28] \\
+  #+begin_src rust 
+    // DON'T change any code else
+    fn never_return_fn() -> ! {
+        unimplemented!()
+    }
+    // IMPLEMENT this function in THREE ways
+    fn never_return_fn() -> ! {
+        panic!()
+    }
+    // IMPLEMENT this function in THREE ways
+    fn never_return_fn() -> ! {
+        todo!();
+    }
+    // IMPLEMENT this function in THREE ways
+    fn never_return_fn() -> ! {
+        loop {
+            std::thread::sleep(std::time::Duration::from_secs(1))
+        }
+    }
+  #+end_src
+*** 所有权
+- [2022-12-09 Fri 10:43] \\
+  内存地址:
+  #+begin_src rust  
+    println!("{:?}{:?}",  get_addr(r1),get_addr(r2));
+    // 判断两个内存地址的字符串是否相等
+    assert_eq!(get_addr(r1),get_addr(r2));
+    // 获取传入引用的内存地址的字符串形式
+    fn get_addr(r: &char) -> String {
+        format!("{:p}", r)
+    }
+  #+end_src
+- [2022-12-08 Thu 17:24] \\
+  可变引用
+  不可变引用
+  浅拷贝
+  深拷贝
+- [2022-12-08 Thu 15:59] \\
+  深拷贝 :
+  #+begin_src rust 
+    let s1 = String::from("hello");
+    let s2 = s1.clone();
+  
+    println!("s1 = {}, s2 = {}", s1, s2);
+  #+end_src
+*** String
+- [2022-12-09 Fri 17:38] \\
+  string to vec
+  #+begin_src rust  
+    s.bytes();
+  #+end_src
+- [2022-12-09 Fri 17:38] \\
+  vec to string
+  #+begin_src rust  
+    String::from_utf8()
+  #+end_src
+- [2022-12-09 Fri 17:16] \\
+  &str to String
+  #+begin_src rust  
+    String::from("hello,world")
+    "hello,world".to_string()
+  #+end_src
+- [2022-12-09 Fri 17:09] \\
+  String to &str
+  #+begin_src rust  
+    say_hello(&s);
+    say_hello(&s[..]);
+    say_hello(s.as_str());
+  #+end_src
+- [2022-12-09 Fri 13:25] \\
+  #+begin_src rust  
+    fn main() {
+        let mut s = String::from("hello");
+        s.push(','); //push char
+        s.push_str(" world"); // push str
+        s += &"!".to_string(); // equal to: s += "!"
+        println!("{}", &s)
+    }
+  #+end_src
+    equal to
+  #+begin_src rust  
+    let mut s = String::from("hello");
+    s += ",";
+    s += " world";
+    s += "!"
+    println!("{}", &s)
+  #+end_src
+*** array 和 vector
+- [2022-12-13 Tue 14:42] \\
+  array是栈上数组, 不可变长度
+  vector是堆上数组, 可变长度
+*** match 和 if let
+- [2022-12-14 Wed 17:19] \\
+  这两种匹配对于新手来说，可能有些难以抉择，但是只要记住一点就好：当你只要匹配一个条件，且忽略其他条件时就用 if let ，否则都用 match。
+*** 可变应用match
+#+begin_src rust  
+  fn main() {
+    let mut v = String::from("Hello,");
+    let x = &mut v;
+    match x {
+        value => {
+            value.push_str("World");
+            dbg!(value);
+        }
+    }
+}
+#+end_src
+

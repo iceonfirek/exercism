@@ -1,4 +1,4 @@
 [package]
-name = "assembly-line"
+name = "assembly_line"
 version = "0.1.0"
 edition = "2021"
